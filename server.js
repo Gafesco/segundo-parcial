@@ -1,35 +1,35 @@
-import express from 'express'
-import { config } from 'dotenv'
-import pg from 'pg'
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-config()  // Cargar las variables de entorno
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
-const app = express()
+app.use(bodyParser.json());
 
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-})
+const db = require('./config/db.config.js');
 
-app.get('/', (req, res) => {
-  res.send('Hola Mundo')
-})
+db.sequelize.sync().then(() => {
+  console.log('Drop and Resync with { force: true }');
+});
 
-app.get('/ping', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT NOW()')
-    return res.json(result.rows[0])
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Database query failed' })
-  }
-})
 
-app.listen(3000, () => {
-  console.log('server on port', 3000)
-})
-
-let libroRouter = require('./app/routers/routerlibro.js');
+let libroRouter = require('./routers/routerlibro.js');
 
 
 app.use('/api/libros', libroRouter); 
+
+
+app.get("/", (req, res) => {
+  res.json({ message: "Bienvenido Estudiantes de UMG" });
+});
+
+const server = app.listen(8080, function () {
+  let host = server.address().address;
+  let port = server.address().port;
+  console.log("App listening at http://%s:%s", host, port);
+});

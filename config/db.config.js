@@ -24,6 +24,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Modelos
-db.Libro = require('../models/libros.model.js')(sequelize, Sequelize);
+const LibroModel = require('../models/libros.model.js');
+db.Libro = LibroModel(sequelize, Sequelize);
 
 module.exports = db;

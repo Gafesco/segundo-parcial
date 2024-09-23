@@ -13,9 +13,7 @@ app.use(bodyParser.json());
 
 const db = require('./config/db.config.js');
 
-db.sequelize.sync().then(() => {
-  console.log('Drop and Resync with { force: true }');
-});
+db.sequelize.sync().then(() => {});
 
 
 let libroRouter = require('./routers/routerlibro.js');

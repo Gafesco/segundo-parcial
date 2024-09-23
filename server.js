@@ -28,3 +28,8 @@ app.get('/ping', async (req, res) => {
 app.listen(3000, () => {
   console.log('server on port', 3000)
 })
+
+let libroRouter = require('./app/routers/routerlibro.js');
+
+
+app.use('/api/libros', libroRouter); 

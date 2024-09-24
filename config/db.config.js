@@ -10,7 +10,6 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
       rejectUnauthorized: false
     }
   },
-  operatorsAliases: false, 
   pool: {
     max: env.pool.max,
     min: env.pool.min,
@@ -25,6 +24,13 @@ db.sequelize = sequelize;
 
 // Modelos
 const LibroModel = require('../models/libros.model.js');
+const EstudianteModel = require('../models/estudiante.model.js');
+const CursoModel = require('../models/curso.model.js');
+const NotaModel = require('../models/nota.model.js'); // Añadido para el modelo Nota
+
 db.Libro = LibroModel(sequelize, Sequelize);
+db.Estudiante = EstudianteModel(sequelize, Sequelize);
+db.Curso = CursoModel(sequelize, Sequelize);
+db.Nota = NotaModel(sequelize, Sequelize); // Añadido para el modelo Nota
 
 module.exports = db;
